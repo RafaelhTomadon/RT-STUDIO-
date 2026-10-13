@@ -185,7 +185,7 @@ const heroCharacterConfig = {
 
 function heroCharacter(config = heroCharacterConfig) {
   const video = config.videoSrc
-    ? `<video class="hero-character-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" poster="${esc(config.fallbackSrc)}"><source data-src="${esc(config.videoSrc)}" type="${esc(config.videoType)}"></video>`
+    ? `<video class="hero-character-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" aria-hidden="true" poster="${esc(config.fallbackSrc)}"><source data-src="${esc(config.videoSrc)}" type="${esc(config.videoType)}"></video>`
     : "";
   return `<figure class="hero-portrait" style="--hero-portrait-width:${config.width}px;--hero-portrait-height:${config.height}px;--hero-portrait-aspect:${config.width}/${config.height};--hero-glow-strength:${config.glow};--hero-portrait-justify:${config.position}">
     <div class="hero-character-motion">
@@ -222,6 +222,10 @@ function initializeHeroCharacter() {
   const figure = ROOT.querySelector(".hero-portrait");
   const video = figure?.querySelector(".hero-character-video");
   if (!video) return;
+
+  video.muted = true;
+  video.defaultMuted = true;
+  video.playsInline = true;
 
   const source = video.querySelector("source");
   const videoSrc = source?.dataset.src;
